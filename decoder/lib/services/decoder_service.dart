@@ -4,11 +4,11 @@ import 'package:http/http.dart' as http;
 class DecoderService {
   static const String baseUrl =
       'https://decoder_new-222632046587.us-central1.run.app';
-
   static Map<String, String> get _headers => {
     'Content-Type': 'application/json',
   };
 
+  // 1. Full Communication Analysis
   static Future<Map<String, dynamic>> analyzeText(String text) async {
     final response = await http.post(
       Uri.parse('$baseUrl/analyze'),
@@ -16,9 +16,10 @@ class DecoderService {
       body: jsonEncode({'text': text}),
     );
     if (response.statusCode == 200) return jsonDecode(response.body);
-    throw Exception('Analysis Error');
+    throw Exception('Analysis Failed');
   }
 
+  // 2. Speaker Identification (Unlabeled Text)
   static Future<Map<String, dynamic>> identifySpeakers(String text) async {
     final response = await http.post(
       Uri.parse('$baseUrl/identify-speakers'),
@@ -26,9 +27,10 @@ class DecoderService {
       body: jsonEncode({'text': text}),
     );
     if (response.statusCode == 200) return jsonDecode(response.body);
-    throw Exception('Identification Error');
+    throw Exception('Identification Failed');
   }
 
+  // 3. Response Simulation (Draft Analysis)
   static Future<Map<String, dynamic>> simulateResponse(
     String context,
     String draft,
@@ -44,9 +46,10 @@ class DecoderService {
       }),
     );
     if (response.statusCode == 200) return jsonDecode(response.body);
-    throw Exception('Simulation Error');
+    throw Exception('Simulation Failed');
   }
 
+  // 4. Pattern Profile Analysis (History-based)
   static Future<Map<String, dynamic>> analyzeProfile(
     String name,
     List<dynamic> logs,
@@ -57,6 +60,6 @@ class DecoderService {
       body: jsonEncode({'name': name, 'logs': logs}),
     );
     if (response.statusCode == 200) return jsonDecode(response.body);
-    throw Exception('Profile Analysis Error');
+    throw Exception('Profile Analysis Failed');
   }
 }
