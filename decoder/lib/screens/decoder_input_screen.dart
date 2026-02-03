@@ -30,10 +30,11 @@ class _DecoderInputScreenState extends State<DecoderInputScreen> {
         ),
       );
     } catch (e) {
-      if (mounted)
+      if (mounted) {
         ScaffoldMessenger.of(
           context,
         ).showSnackBar(const SnackBar(content: Text("Service Error")));
+      }
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }

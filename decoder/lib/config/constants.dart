@@ -10,16 +10,10 @@ const Color kColorGold = Color(0xFFD4AF37);
 const String kPrivacyUrl = "https://digitalabcs.com.au/privacy.html";
 const String kTermsUrl = "https://digitalabcs.com.au/terms.html";
 
-// FIX: Added missing kStyleHeader for UI consistency and WCAG compliance
+// FIX: Added kStyleHeader to resolve build errors in screens
 const TextStyle kStyleHeader = TextStyle(
   color: Colors.white,
   fontSize: 18,
   fontWeight: FontWeight.bold,
-  fontFamily: 'NotoSans',
-);
-
-const TextStyle kStyleBody = TextStyle(
-  color: Color(0xFF1E293B),
-  fontSize: 16,
   fontFamily: 'NotoSans',
 );

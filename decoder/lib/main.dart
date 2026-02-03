@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'screens/splash_screen.dart';
 import 'screens/age_verification_screen.dart';
 import 'screens/paywall_screen.dart';
 import 'screens/dashboard_screen.dart';
 import 'services/storage_service.dart';
+import 'config/constants.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(const DecoderApp());
+  await dotenv.load(fileName: ".env");
+  await StorageService.initialize();  // Initialize storage service
 }
+
 
 class DecoderApp extends StatelessWidget {
   const DecoderApp({super.key});

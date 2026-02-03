@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:url_launcher/url_launcher.dart'; // Ensure 'url_launcher' is in pubspec.yaml
+import 'package:url_launcher/url_launcher.dart';
 import '../config/constants.dart';
 import '../widgets/app_header.dart';
 import 'splash_screen.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,16 +17,18 @@ class SettingsScreen extends StatelessWidget {
             title: const Text("Terms"),
             onTap: () async {
               final Uri url = Uri.parse(kTermsUrl);
-              if (!await launchUrl(url))
+              if (!await launchUrl(url)) {
                 throw Exception('Could not launch $url');
+              }
             },
           ),
           ListTile(
             title: const Text("Privacy"),
             onTap: () async {
               final Uri url = Uri.parse(kPrivacyUrl);
-              if (!await launchUrl(url))
+              if (!await launchUrl(url)) {
                 throw Exception('Could not launch $url');
+              }
             },
           ),
           ListTile(
