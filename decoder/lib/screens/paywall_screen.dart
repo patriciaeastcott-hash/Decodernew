@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '../services/storage_service.dart';
+import '../config/constants.dart';
+import 'dashboard_screen.dart';
 
 class PaywallScreen extends StatefulWidget {
   const PaywallScreen({super.key});
@@ -9,35 +12,66 @@ class PaywallScreen extends StatefulWidget {
 class _PaywallScreenState extends State<PaywallScreen> {
   final TextEditingController _promoController = TextEditingController();
 
-  void _checkPromo() {
+  void _unlock() async {
+    await StorageService.setPremium(true);
+    if (!mounted) return;
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (_) => const DashboardScreen()),
+    );
+  }
+
+  void _checkPromo() async {
     if (_promoController.text == "demo2025") {
-      // Logic to unlock premium features locally
-      Navigator.pushReplacementNamed(context, '/dashboard');
+      _unlock();
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Invalid Promo Code"))
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(const SnackBar(content: Text("Invalid Promo Code")));
     }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kColorNavy,
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Unlock Premium Decoding", style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+            const Text(
+              "Unlock Premium",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
             const SizedBox(height: 20),
-            ElevatedButton(onPressed: () {}, child: const Text("Subscribe - $9.99/mo")),
-            TextButton(onPressed: () {}, child: const Text("Restore Purchases")),
-            const Divider(),
+            ElevatedButton(
+              onPressed: _unlock,
+              child: const Text("Unlock Full Version"),
+            ),
+            const SizedBox(height: 30),
             TextField(
               controller: _promoController,
-              decoration: const InputDecoration(labelText: "Enter Promo Code (e.g. demo2025)"),
+              style: const TextStyle(color: Colors.white),
+              decoration: const InputDecoration(
+                labelText: "Enter Promo Code",
+                labelStyle: TextStyle(color: Colors.white70),
+                enabledBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.white),
+                ),
+              ),
             ),
-            ElevatedButton(onPressed: _checkPromo, child: const Text("Apply Code")),
+            TextButton(
+              onPressed: _checkPromo,
+              child: const Text(
+                "Apply Code",
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
           ],
         ),
       ),
